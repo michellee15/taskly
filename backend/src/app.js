@@ -1,13 +1,22 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require("express");
+const cors = require("cors");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-app.get('/hello', (req, res) => {
-  res.send('World!')
-})
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const taskRoutes = require("./routes/taskRoutes");
+const errorHandler = require("./middleware/errorHandler");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "Taskly backend is running",
+  });
+});
+
+app.use("/api/tasks", taskRoutes);
+
+app.use(errorHandler);
+
+module.exports = app;
