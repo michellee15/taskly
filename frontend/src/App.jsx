@@ -5,6 +5,8 @@ import {
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import taskForm from './components/taskForm'
+import taskList from './components/taskList';
 import './App.css'
 
 function App() {
@@ -65,35 +67,17 @@ function App() {
     <main>
       <h1>Taskly</h1>
 
-      <form onSubmit={handleAddTask}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter a description"
-        />
-        <button type="submit">Add</button>  
-      </form>
+      <taskForm
+        title={title}
+        setTitle={setTitle}
+        handleAddTask={handleAddTask}
+      />
 
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-          <input
-            type="checkbox"
-            checked={task.completed}
-            onChange={() => handleUpdateTask(task)}
-          />
-        
-          <span style={{ textDecoration: task.completed ? "line-through" : "none" }}>
-            {task.title}
-          </span>
-        
-          <button onClick={() => handleDeleteTask(task.id)}>
-            Delete
-          </button>
-        </li>
-        ))}
-      </ul>
+      <taskList
+        tasks={tasks}
+        handleUpdateTask={handleUpdateTask}
+        handleDeleteTask={handleDeleteTask}
+      />
     </main>
   );
 }
