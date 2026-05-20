@@ -1,4 +1,4 @@
-const API_URL = "https://localhost:5000/api/tasks";
+const API_URL = "http://localhost:5000/api/tasks";
 
 export async function getTasks() {
   const response = await fetch(API_URL);
@@ -9,7 +9,7 @@ export async function getTasks() {
   return result.data;
 }
 
-export async function createTasks(task) {
+export async function createTask(task) {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: {
