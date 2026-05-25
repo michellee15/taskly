@@ -13,6 +13,7 @@ function App() {
   const [error, setError] = useState("");
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   const filteredTasks = tasks.filter((task) => {
     if (filter == "active") {
@@ -47,10 +48,12 @@ function App() {
     try {
       const newTask = await createTask({
         title: title,
-        dueDate: null,
+        dueDate: dueDate || null, //if user never choose a date, then database should receive null
       });
       setTasks([newTask, ...tasks]);
+
       setTitle("");
+      setDueDate("");
     } catch (error) {
       console.error(error.message);
     }
@@ -87,6 +90,8 @@ function App() {
       <TaskForm
         title={title}
         setTitle={setTitle}
+        dueDate={dueDate}
+        setDueDate={setDueDate}
         handleAddTask={handleAddTask}
       />
 
