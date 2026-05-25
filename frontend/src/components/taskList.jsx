@@ -1,23 +1,23 @@
-import taskItem from './taskItem';
+import TaskItem from './taskItem'
 
-// loops through all tasks 
-function taskList ({tasks, handleUpdateTask, handleDeleteTask}) {
-  if (tasks.length == 0) {
-    return <p>No tasks yet. Add your first task.</p>
+// loops through all tasks
+function TaskList({ tasks, handleUpdateTask, handleDeleteTask }) {
+  if (tasks.length === 0) {
+    return <p>No tasks yet. Add your first task.</p>;
   }
 
   return (
-    <u1>
+    <ul>
       {tasks.map((task) => (
-        <taskItem 
+        <TaskItem
           key={task.id}
           task={task}
           handleUpdateTask={handleUpdateTask}
           handleDeleteTask={handleDeleteTask}
         />
       ))}
-    </u1>
+    </ul>
   );
 }
 
-export default taskList;
+export default TaskList;
