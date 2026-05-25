@@ -1,5 +1,5 @@
 // handles input box + add button of adding task
-function TaskForm({title, setTitle, handleAddTask}) {
+function TaskForm({title, setTitle, dueDate, setDueDate, handleAddTask}) {
   return (
     <form onSubmit={handleAddTask}>
       <input
@@ -8,6 +8,12 @@ function TaskForm({title, setTitle, handleAddTask}) {
         onChange={(e) => setTitle(e.target.value) }
         placeholder="enter task description"
       />
+      <input
+        type="date"
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
+      />
+
       <button type="submit">Add</button>
     </form>
   )
