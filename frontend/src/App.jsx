@@ -14,6 +14,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [priority, setPriority] = useState("medium");
 
   const filteredTasks = tasks.filter((task) => {
     if (filter == "active") {
@@ -48,12 +49,14 @@ function App() {
     try {
       const newTask = await createTask({
         title: title,
-        dueDate: dueDate || null, //if user never choose a date, then database should receive null
+        dueDate: due_date || null, //if user never choose a date, then database should receive null
+        priority: priority,
       });
       setTasks([newTask, ...tasks]);
 
       setTitle("");
       setDueDate("");
+      setPriority("medium");
     } catch (error) {
       console.error(error.message);
     }
@@ -74,6 +77,7 @@ function App() {
         title: task.title,
         completed: !task.completed,
         dueDate: task.due_date,
+        priority: task.priority,
       });
       setTasks(
         tasks.map((currentTask) => currentTask.id == task.id ? updatedTask : currentTask)
@@ -92,6 +96,8 @@ function App() {
         setTitle={setTitle}
         dueDate={dueDate}
         setDueDate={setDueDate}
+        priority={priority}
+        setPriority={setPriority}
         handleAddTask={handleAddTask}
       />
 
