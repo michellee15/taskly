@@ -37,7 +37,7 @@ async function getTask(req, res, next) {
 
 async function createTask(req, res, next) {
   try {
-    const { title, dueDate } = req.body;
+    const { title, dueDate, priority } = req.body;
 
     if (!title || title.trim() === "") {
       return res.status(400).json({
@@ -46,7 +46,7 @@ async function createTask(req, res, next) {
       });
     }
 
-    const newTask = await taskModel.createTask(title, dueDate);
+    const newTask = await taskModel.createTask(title, dueDate, priority);
 
     res.status(201).json({
       success: true,
@@ -60,7 +60,7 @@ async function createTask(req, res, next) {
 async function updateTask(req, res, next) {
   try {
     const { id } = req.params;
-    const { title, completed, dueDate } = req.body;
+    const { title, completed, dueDate, priority } = req.body;
 
     if (!title || title.trim() === "") {
       return res.status(400).json({
@@ -80,7 +80,8 @@ async function updateTask(req, res, next) {
       id,
       title,
       completed,
-      dueDate
+      dueDate,
+      priority
     );
 
     if (!updatedTask) {

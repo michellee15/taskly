@@ -17,27 +17,28 @@ async function getTaskById(id) {
   return result.rows[0];
 }
 
-async function createTask(title, dueDate) {
+async function createTask(title, dueDate, priority) {
   const result = await pool.query(
-    `INSERT INTO tasks (title, due_date)
-     VALUES ($1, $2)
+    `INSERT INTO tasks (title, due_date, priority)
+     VALUES ($1, $2, $3)
      RETURNING *`,
-    [title, dueDate || null]
+    [title, dueDate || null, priority || "medium"]
   );
 
   return result.rows[0];
 }
 
-async function updateTask(id, title, completed, dueDate) {
+async function updateTask(id, title, completed, dueDate, priority) {
   const result = await pool.query(
     `UPDATE tasks
      SET title = $1,
          completed = $2,
          due_date = $3,
+         priority = $4,
          updated_at = CURRENT_TIMESTAMP
-     WHERE id = $4
+     WHERE id = $5
      RETURNING *`,
-    [title, completed, dueDate || null, id]
+    [title, completed, dueDate || null, priority || "medium", id]
   );
 
   return result.rows[0];
