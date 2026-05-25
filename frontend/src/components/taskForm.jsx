@@ -1,5 +1,5 @@
 // handles input box + add button of adding task
-function taskForm({title, setTitle, handleAddTask}) {
+function TaskForm({title, setTitle, handleAddTask}) {
   return (
     <form onSubmit={handleAddTask}>
       <input
@@ -13,4 +13,4 @@ function taskForm({title, setTitle, handleAddTask}) {
   )
 }
 
-export default taskForm;
+export default TaskForm;
