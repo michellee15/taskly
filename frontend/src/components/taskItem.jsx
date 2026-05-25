@@ -10,7 +10,7 @@ function TaskItem({task, handleUpdateTask, handleDeleteTask}) {
         
       <span style={{ textDecoration: task.completed ? "line-through" : "none" }}>
         {task.title}
-        {task.due_date && <span> Due: {new Date(task.due_date).toLocaleDateString("en-SG", {
+        {task.due_date && <span> | Due: {new Date(task.due_date).toLocaleDateString("en-SG", {
           day: "numeric",
           month: "short",
           year: "numeric"
