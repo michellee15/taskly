@@ -37,7 +37,11 @@ async function getTask(req, res, next) {
 
 async function createTask(req, res, next) {
   try {
+<<<<<<< HEAD
     const { title, dueDate, priority } = req.body;
+=======
+    const { title, dueDate } = req.body;
+>>>>>>> 72de7664b4d36a34b16450b7677e8af4af84a5e5
 
     if (!title || title.trim() === "") {
       return res.status(400).json({
@@ -46,7 +50,11 @@ async function createTask(req, res, next) {
       });
     }
 
+<<<<<<< HEAD
     const newTask = await taskModel.createTask(title, dueDate, priority);
+=======
+    const newTask = await taskModel.createTask(title, dueDate);
+>>>>>>> 72de7664b4d36a34b16450b7677e8af4af84a5e5
 
     res.status(201).json({
       success: true,
@@ -60,7 +68,11 @@ async function createTask(req, res, next) {
 async function updateTask(req, res, next) {
   try {
     const { id } = req.params;
+<<<<<<< HEAD
     const { title, completed, dueDate, priority } = req.body;
+=======
+    const { title, completed, dueDate } = req.body;
+>>>>>>> 72de7664b4d36a34b16450b7677e8af4af84a5e5
 
     if (!title || title.trim() === "") {
       return res.status(400).json({
