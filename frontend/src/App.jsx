@@ -2,23 +2,40 @@ import { useEffect, useState } from 'react'
 import {
   getTasks, createTask, updateTask, deleteTask
 } from "./services/taskApi"
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import taskForm from './components/taskForm'
-import taskList from './components/taskList';
+import TaskForm from './components/taskForm'
+import TaskList from './components/taskList'
+import TaskFilter from './components/taskFilter'
 import './App.css'
 
 function App() {
+  const[filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter == "active") {
+      return !task.completed;
+    }
+
+    if (filter == "completed") {
+      return task.completed;
+    }
+
+    return true;
+  });
+
   useEffect(() => {
     async function loadTasks() {
       try {
+        setLoading(true);
         const data = await getTasks();
         setTasks(data);
       } catch (error) {
-        console.error(error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     }
     loadTasks();
@@ -66,18 +83,24 @@ function App() {
   return (
     <main>
       <h1>Taskly</h1>
-
-      <taskForm
+  
+      <TaskForm
         title={title}
         setTitle={setTitle}
         handleAddTask={handleAddTask}
       />
 
-      <taskList
-        tasks={tasks}
-        handleUpdateTask={handleUpdateTask}
-        handleDeleteTask={handleDeleteTask}
-      />
+      <TaskFilter filter={filter} setFilter={setFilter}/>
+
+      {loading && <p>Loading tasks...</p>}
+      {error && <p>{error}</p>}
+      {!loading && !error && (
+        <TaskList
+          tasks={filteredTasks}
+          handleUpdateTask={handleUpdateTask}
+          handleDeleteTask={handleDeleteTask}
+        />
+      )}
     </main>
   );
 }

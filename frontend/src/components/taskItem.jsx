@@ -1,5 +1,5 @@
 // TaskItem manages how one task is displayed and interacted with and represents one task in the list 
-function taskItem({task, handleUpdateTask, handleDeleteTask}) {
+function TaskItem({task, handleUpdateTask, handleDeleteTask}) {
   return (
     <li>
       <input
@@ -19,4 +19,4 @@ function taskItem({task, handleUpdateTask, handleDeleteTask}) {
   );
 }
 
-export default taskItem;
+export default TaskItem;
