@@ -6,6 +6,7 @@ import TaskForm from './components/taskForm'
 import TaskList from './components/taskList'
 import TaskFilter from './components/taskFilter'
 import SearchBar from './components/searchBar'
+import SortDropdown from './components/sortDropdown'
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   const [dueDate, setDueDate] = useState("");
   const [priority, setPriority] = useState("medium");
   const [searchTask, setSearchTask] = useState("");
+  const [sortBy, setSortBy] = useState("newest");
 
   const filteredTasks = tasks.filter((task) => {
     if (filter == "active") {
@@ -31,6 +33,30 @@ function App() {
   });
   
   const searchedTasks = filteredTasks.filter((task) => task.title.toLowerCase().includes(searchTask.toLowerCase())); 
+
+  const sortedTasks = [...searchedTasks].sort((a, b) => {
+
+    if (a.completed !== b.completed) return a.completed - b.completed;
+
+    if (sortBy == "newest") return new Date(b.created_at) - new Date(a.created_at);
+
+    if (sortBy == "oldest") return new Date(a.created_at) - new Date(b.created_at);
+
+    if (sortBy == "dueDate") {
+      if (!a.due_date && !b.due_date) return 0;
+      if (!a.due_date) return 1;
+      if (!b.due_date) return -1;
+      
+      return new Date(a.due_date) - new Date(b.due_date);
+    }
+
+    if (sortBy == "priority") {
+      const priorityOrder = {high: 3, medium: 2, low: 1}
+      return priorityOrder[b.priority] - priorityOrder[a.priority];
+    }
+
+    return 0;
+  })
 
   useEffect(() => {
     async function loadTasks() {
@@ -53,7 +79,7 @@ function App() {
     try {
       const newTask = await createTask({
         title: title,
-        dueDate: due_date || null, //if user never choose a date, then database should receive null
+        dueDate: dueDate || null, //if user never choose a date, then database should receive null
         priority: priority,
       });
       setTasks([newTask, ...tasks]);
@@ -112,11 +138,13 @@ function App() {
         setSearchTask={setSearchTask}
       />
 
+      <SortDropdown sortBy={sortBy} setSortBy={setSortBy}/>
+
       {loading && <p>Loading tasks...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && (
         <TaskList
-          tasks={searchedTasks}
+          tasks={sortedTasks}
           handleUpdateTask={handleUpdateTask}
           handleDeleteTask={handleDeleteTask}
         />
