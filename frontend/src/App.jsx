@@ -5,6 +5,7 @@ import {
 import TaskForm from './components/taskForm'
 import TaskList from './components/taskList'
 import TaskFilter from './components/taskFilter'
+import SearchBar from './components/searchBar'
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [priority, setPriority] = useState("medium");
+  const [searchTask, setSearchTask] = useState("");
 
   const filteredTasks = tasks.filter((task) => {
     if (filter == "active") {
@@ -27,6 +29,8 @@ function App() {
 
     return true;
   });
+  
+  const searchedTasks = filteredTasks.filter((task) => task.title.toLowerCase().includes(searchTask.toLowerCase())); 
 
   useEffect(() => {
     async function loadTasks() {
@@ -103,11 +107,16 @@ function App() {
 
       <TaskFilter filter={filter} setFilter={setFilter}/>
 
+      <SearchBar 
+        searchTask={searchTask}
+        setSearchTask={setSearchTask}
+      />
+
       {loading && <p>Loading tasks...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && (
         <TaskList
-          tasks={filteredTasks}
+          tasks={searchedTasks}
           handleUpdateTask={handleUpdateTask}
           handleDeleteTask={handleDeleteTask}
         />
