@@ -1,7 +1,7 @@
 import TaskItem from './taskItem'
 
 // loops through all tasks
-function TaskList({ tasks, handleUpdateTask, handleDeleteTask }) {
+function TaskList({ tasks, handleUpdateTask, handleDeleteTask, handleEditTask }) {
   if (tasks.length === 0) {
     return <p>No tasks yet. Add your first task.</p>;
   }
@@ -14,6 +14,7 @@ function TaskList({ tasks, handleUpdateTask, handleDeleteTask }) {
           task={task}
           handleUpdateTask={handleUpdateTask}
           handleDeleteTask={handleDeleteTask}
+          handleEditTask={handleEditTask}
         />
       ))}
     </ul>
