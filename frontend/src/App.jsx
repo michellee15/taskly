@@ -46,7 +46,7 @@ function App() {
       if (!a.due_date && !b.due_date) return 0;
       if (!a.due_date) return 1;
       if (!b.due_date) return -1;
-      
+
       return new Date(a.due_date) - new Date(b.due_date);
     }
 
@@ -117,6 +117,17 @@ function App() {
     }
   }
 
+  async function handleEditTask(id, updatedTaskData){
+    try {
+      const editedTask = await updateTask(id, updatedTaskData);
+      setTasks(
+        tasks.map((currentTask) => currentTask.id == id ? editedTask : currentTask)
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   return (
     <main>
       <h1>Taskly</h1>
@@ -147,6 +158,7 @@ function App() {
           tasks={sortedTasks}
           handleUpdateTask={handleUpdateTask}
           handleDeleteTask={handleDeleteTask}
+          handleEditTask={handleEditTask}
         />
       )}
     </main>
