@@ -7,6 +7,7 @@ import TaskList from './components/taskList'
 import TaskFilter from './components/taskFilter'
 import SearchBar from './components/searchBar'
 import SortDropdown from './components/sortDropdown'
+import TaskStats from './components/taskStats';
 import './App.css'
 
 function App() {
@@ -141,6 +142,8 @@ function App() {
         setPriority={setPriority}
         handleAddTask={handleAddTask}
       />
+
+      <TaskStats tasks={tasks} />
 
       <TaskFilter filter={filter} setFilter={setFilter}/>
 
