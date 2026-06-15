@@ -130,40 +130,49 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>Taskly</h1>
-  
-      <TaskForm
-        title={title}
-        setTitle={setTitle}
-        dueDate={dueDate}
-        setDueDate={setDueDate}
-        priority={priority}
-        setPriority={setPriority}
-        handleAddTask={handleAddTask}
-      />
-
-      <TaskStats tasks={tasks} />
-
-      <TaskFilter filter={filter} setFilter={setFilter}/>
-
-      <SearchBar 
-        searchTask={searchTask}
-        setSearchTask={setSearchTask}
-      />
-
-      <SortDropdown sortBy={sortBy} setSortBy={setSortBy}/>
-
-      {loading && <p>Loading tasks...</p>}
-      {error && <p>{error}</p>}
-      {!loading && !error && (
-        <TaskList
-          tasks={sortedTasks}
-          handleUpdateTask={handleUpdateTask}
-          handleDeleteTask={handleDeleteTask}
-          handleEditTask={handleEditTask}
+    <main className="app-container">
+      <header className="app-header">
+        <h1>Taskly</h1>
+        <p>Organise your tasks, priorities, and deadlines in one place.</p>
+      </header>
+    
+      <section className="task-form-section">
+        <TaskForm
+          title={title}
+          setTitle={setTitle}
+          dueDate={dueDate}
+          setDueDate={setDueDate}
+          priority={priority}
+          setPriority={setPriority}
+          handleAddTask={handleAddTask}
         />
-      )}
+      </section>
+
+      <section className="stats-section">
+        <TaskStats tasks={tasks} />
+      </section>
+
+      <section className="controls-container">
+        <TaskFilter filter={filter} setFilter={setFilter}/>
+        <SearchBar 
+          searchTask={searchTask}
+          setSearchTask={setSearchTask}
+        />
+        <SortDropdown sortBy={sortBy} setSortBy={setSortBy}/>
+      </section>
+
+      <section className="task-list-section">
+        {loading && <p>Loading tasks...</p>}
+          {error && <p>{error}</p>}
+          {!loading && !error && (
+            <TaskList
+              tasks={sortedTasks}
+              handleUpdateTask={handleUpdateTask}
+              handleDeleteTask={handleDeleteTask}
+              handleEditTask={handleEditTask}
+            />
+          )}
+      </section>
     </main>
   );
 }
